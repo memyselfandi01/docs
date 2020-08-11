@@ -9,7 +9,7 @@ import ProductShortName from '~/components/name/product-short-name'
 export const meta = {
   editUrl:
     'pages/docs/configuration/configuration-mdx/configuration/configuration.mdx',
-  lastEdited: '2019-11-05T19:44:00.000Z'
+  lastEdited: '2019-11-05T19:44:00.000Z',
 }
 
 # Project
@@ -134,9 +134,8 @@ Environment variables passed to the invoked [Serverless Functions](/docs/v2/serv
 [Environment variables](/docs/v2/build-step#environment-variables) passed to the [Build](/docs/v2/build-step) processes.
 
 <P>
-  The following example will pass the <InlineCode>MY_KEY</InlineCode> static
-  env to all{' '}
-  <Link href="/docs/v2/build-step">Builds</Link> and
+  The following example will pass the <InlineCode>MY_KEY</InlineCode> static env
+  to all <Link href="/docs/v2/build-step">Builds</Link> and
   <InlineCode>SECRET</InlineCode> resolved from the <InlineCode>
     my-secret-name
   </InlineCode> <Link href="/docs/v2/build-step#environment-variables">
@@ -437,8 +436,8 @@ This is not recommended because it could lead to search engines indexing two dif
   This example configures custom redirects that map to static files,{' '}
   <Link href="/docs/v2/serverless-functions/introduction">
     Serverless Functions
-  </Link>,{' '}
-  and external URLs.
+  </Link>
+  , and external URLs.
 </P>
 <Code lang="json">{`{
   "redirects": [
@@ -470,15 +469,16 @@ In some rare cases, you might need to assign a custom status code for older HTTP
   This example configures custom rewrites that map to static files,{' '}
   <Link href="/docs/v2/serverless-functions/introduction">
     Serverless Functions
-  </Link>,{' '}
-  automatic query string matching, and a wildcard proxy.
+  </Link>
+  , automatic query string matching, and a wildcard proxy.
 </P>
 <Code lang="json">{`{
   "rewrites": [
     { "source": "/about", "destination": "/about-our-company.html" },
     { "source": "/resize/:width/:height", "destination": "/api/sharp" },
     { "source": "/user/:id", "destination": "/api/user" },
-    { "source": "/proxy/:match", "destination": "https://example.com/:match" }
+    { "source": "/proxy/:match", "destination": "https://example.com/:match" },
+    { "source": "/proxy/:match*", "destination": "https://example.com/:match*" }
   ]
 }`}</Code>
 
@@ -502,8 +502,8 @@ In some rare cases, you might need to assign a custom status code for older HTTP
   This example configures custom response headers for static files,{' '}
   <Link href="/docs/v2/serverless-functions/introduction">
     Serverless Functions
-  </Link>,
-  and a wildcard that matches all routes.
+  </Link>
+  , and a wildcard that matches all routes.
 </P>
 <Code lang="json">{`{
   "headers": [

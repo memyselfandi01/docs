@@ -14,7 +14,7 @@ export const meta = {
   title: 'Projects',
   description: `Setting up projects with a list of deployments on ${PRODUCT_NAME}.`,
   editUrl: 'pages/docs/platform/projects.mdx',
-  lastEdited: '2020-08-10T12:17:18.000Z',
+  lastEdited: '2020-08-11T06:54:44.000Z',
 }
 
 To deploy on <ProductName />, you need to create a **Project**. A Project is a logical structure that groups [deployments](/docs/v2/platform/deployments) and [custom domains](/docs/v2/custom-domains). Each project can be associated to a [GitHub](/docs/v2/git-integrations/vercel-for-github), [GitLab](/docs/v2/git-integrations/vercel-for-gitlab), or [Bitbucket](/docs/v2/git-integrations/vercel-for-bitbucket) repository.
@@ -164,8 +164,11 @@ This setting is overwritten when a Deployment is created using Vercel CLI with t
 </Note>
 <br />
 <Note>
-  Deployments created before July 9th, 2020 at 7:05 AM (UTC) have fixed
-  configuration and cannot be changed with this setting.
+  For Deployments created before July 9th, 2020 at 7:05 AM (UTC), only the
+  Project Setting is considered for determining whether the Deployment's Logs
+  and Source are publicly accessible or not. It doesn't matter if the{' '}
+  <InlineCode>--public</InlineCode> flag was passed when creating those
+  Deployments.
 </Note>
 
 ### Password Protection

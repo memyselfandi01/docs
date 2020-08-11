@@ -4,6 +4,7 @@ import Card from '~/components/card'
 import Note from '~/components/text/note'
 import Link from '~/components/text/link'
 import { Code } from '~/components/text/code'
+import ProductName from '~/components/name/product-name'
 
 export const meta = {
   editUrl: 'pages/docs/configuration/configuration-mdx/routes/routes.mdx',
@@ -12,9 +13,9 @@ export const meta = {
 
 # Routes
 
-ZEIT Now uses Routes to define the behavior of how a request is handled by the routing layer. For example, you might use a Route to proxy a URL to another, redirect a client, or apply a header with the response to a request.
+&#8203;<ProductName /> uses Routes to define the behavior of how a request is handled by the routing layer. For example, you might use a Route to proxy a URL to another, redirect a client, or apply a header with the response to a request.
 
-By default, routing is defined by the filesystem of your deployment. For example, if a user makes a request to `/123.png`, and your [`now.json` file](/docs/configuration#project/routes) does not contain any routes with a valid `src` matching that path, it will fallback to the filesystem and serve `/123.png` if it exists.
+By default, routing is defined by the filesystem of your deployment. For example, if a user makes a request to `/123.png`, and your [`vercel.json` file](/docs/configuration#project/routes) does not contain any routes with a valid `src` matching that path, it will fallback to the filesystem and serve `/123.png` if it exists.
 
 <Note>
   For Serverless Function routes, you can configure an{' '}
@@ -26,18 +27,18 @@ By default, routing is defined by the filesystem of your deployment. For example
   .
 </Note>
 
-A Route can be defined within a project's [`now.json` configuration file](/docs/configuration#project/routes) as an object within an array assigned to the `routes` property, like the following which creates a simple proxy from one path to another:
+A Route can be defined within a project's [`vercel.json` configuration file](/docs/configuration#project/routes) as an object within an array assigned to the `routes` property, like the following which creates a simple proxy from one path to another:
 
 <Code lang="json">{`{
   "routes": [{ "src": "/about", "dest": "/about.html" }]
 }`}</Code>
 <Caption>
-    An example <InlineCode>now.json</InlineCode> file with a{' '}
+    An example <InlineCode>vercel.json</InlineCode> file with a{' '}
     <InlineCode>routes</InlineCode> property that proxies one path to another
     upon request.
   </Caption>
 
-ZEIT Now Routes have multiple properties for each route object that help define the behavior of a response to each request to a particular path.
+&#8203;<ProductName /> Routes have multiple properties for each route object that help define the behavior of a response to each request to a particular path.
 
 ## src
 
@@ -45,13 +46,13 @@ ZEIT Now Routes have multiple properties for each route object that help define 
 
 For each route, `src` is required to set the path which the behavior will affect.
 
-The following example shows a `now.json` configuration that takes a `src` path and proxies it to a [destination `dest` path](#dest).
+The following example shows a `vercel.json` configuration that takes a `src` path and proxies it to a [destination `dest` path](#dest).
 
 <Code lang="json">{`{
   "routes": [{ "src": "/about", "dest": "/about.html" }]
 }`}</Code>
 <Caption>
-    An example <InlineCode>now.json</InlineCode> file with a{' '}
+    An example <InlineCode>vercel.json</InlineCode> file with a{' '}
     <InlineCode>routes</InlineCode> property that proxies one path to another
     upon request.
   </Caption>
@@ -60,7 +61,7 @@ The following example shows a `now.json` configuration that takes a `src` path a
 
 **Type**: String
 
-`dest` is used to proxy the [`src`](#src) path to another path, such as another URL or ZEIT Now hosted Serverless Function.
+`dest` is used to proxy the [`src`](#src) path to another path, such as another URL or <ProductName /> hosted Serverless Function.
 
 [The example for the `src` property](#src) shows how both methods work together to create a proxy.
 
@@ -71,16 +72,16 @@ The following example shows a `now.json` configuration that takes a `src` path a
   ]
 }`}</Code>
 <Caption>
-  An example <InlineCode>now.json</InlineCode> file with{' '}
+  An example <InlineCode>vercel.json</InlineCode> file with{' '}
   <InlineCode>routes</InlineCode> properties that proxy paths to another upon
   request.
 </Caption>
 
 <Note>
-  You can point the <InlineCode>dest</InlineCode> path to any URL, ZEIT Now
-  hosted Serverless Function, or even non ZEIT Now hosted URLs as shown in the
-  code above. If you don't perform any proxying, you can safely remove{' '}
-  <InlineCode>dest</InlineCode>.
+  You can point the <InlineCode>dest</InlineCode> path to any URL,{' '}
+  <ProductName /> hosted Serverless Function, or even non <ProductName /> hosted
+  URLs as shown in the code above. If you don't perform any proxying, you can
+  safely remove <InlineCode>dest</InlineCode>.
 </Note>
 
 <Code lang="json">{`{
@@ -155,7 +156,7 @@ For example, you can use this property in combination with [the `headers` proper
 
 **Type**: Integer
 
-The `status` property defines the status code that ZEIT Now should respond with when a path is requested.
+The `status` property defines the status code that <ProductName /> should respond with when a path is requested.
 
 For example, you can use this property in combination with [the `headers` property](#headers) to create a redirect with the initial status code of 308 (Moved Permanently).
 
@@ -180,7 +181,7 @@ For example, you can use this property in combination with [the `headers` proper
 
 <Note>
   In a redirect case as shown above, the <InlineCode>Location</InlineCode>{' '}
-  property can also point to non ZEIT Now hosted URLs.
+  property can also point to non <ProductName /> hosted URLs.
 </Note>
 
 Read more about redirecting your `www.` subdomain to your root domain in the [custom domains documentation](/docs/v2/custom-domains/#redirecting-domains).
@@ -212,9 +213,10 @@ As an example, you can use this property when you have an API endpoint and only 
 
 <Note>
   The above example uses the{' '}
-  <Link href="/docs/runtimes#official-builders/node-js">@now/node</Link> Runtime
-  as an example of a <InlineCode>now.json</InlineCode> configuration that tells
-  ZEIT Now to build JavaScript files with Node.js and outputs them as{' '}
+  <Link href="/docs/runtimes#official-builders/node-js">@vercel/node</Link>{' '}
+  Runtime as an example of a <InlineCode>vercel.json</InlineCode> configuration
+  that tells <ProductName /> to build JavaScript files with Node.js and outputs
+  them as{' '}
   <Link href="/docs/v2/serverless-functions/introduction/">
     Serverless Functions
   </Link>
@@ -235,7 +237,7 @@ Routes are applied in the order they are listed in the `routes` array. Take the 
 }`}</Code>
 
 <Caption>
-  An incorrect example <InlineCode>now.json</InlineCode> file that will match
+  An incorrect example <InlineCode>vercel.json</InlineCode> file that will match
   all
   <InlineCode>routes</InlineCode> and proxy them to <InlineCode>/</InlineCode>
 </Caption>
@@ -254,7 +256,8 @@ The correct configuration for all routes to take affect would be the following:
 ```
 
 <Caption>
-  A correct example <InlineCode>now.json</InlineCode> file that will match all
+  A correct example <InlineCode>vercel.json</InlineCode> file that will match
+  all
   <InlineCode>routes</InlineCode>, only proxying to <InlineCode>/</InlineCode> if
   there are no matches.
 </Caption>
@@ -344,13 +347,13 @@ As another example, if you want to redirect from all paths under a certain direc
   instead using <InlineCode>redirects</InlineCode>.
 </Caption>
 
-If you are using a Next.js app and want to learn more about using custom routes with ZEIT Now, read our guide:
+If you are using a Next.js app and want to learn more about using custom routes with <ProductName />, read our guide:
 
 <Card
   title="Deploying with Custom Next.js Routes"
   href="/guides/custom-next-js-server-to-routes"
 >
-  Custom Routes with Next.js and ZEIT Now.
+  Custom Routes with Next.js and <ProductName />.
 </Card>
 
 ### Wildcard Routes
@@ -366,7 +369,7 @@ Sometimes, you will have wildcard routes that overlap with other routes. For exa
 }`}</Code>
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file where filesystem routes are
+  A <InlineCode>vercel.json</InlineCode> file where filesystem routes are
   explicitly defined.
 </Caption>
 
@@ -380,8 +383,8 @@ You might find that there are many routes without a `dest`. These routes can be 
 }`}</Code>
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file, using handle filesystem to route to
-  filesystem routes.
+  A <InlineCode>vercel.json</InlineCode> file, using handle filesystem to route
+  to filesystem routes.
 </Caption>
 
 In this example, handle filesystem expands to route `/about` and `/contact`.
@@ -401,40 +404,54 @@ When using `rewrites`, handle filesystem is assumed so this example can be simpl
 
 ### Custom 404
 
-The `routes` array is processed before attempting a match. For example, this allows you to send a `404` status code for specific route patterns:
+If you wish to create a custom 404 page, you should follow your framework's documentation.
 
-<Code lang="json">{`{
-  "version": 2,
-  "routes": [{ "src": "/build/stats", "status": 404, "dest": "/404" }]
-}`}</Code>
+- [**Next.js**: Customizing the 404 Page](https://nextjs.org/docs/advanced-features/custom-error-page)
+- [**Gatsby**: Adding a 404 page](https://www.gatsbyjs.org/docs/add-404-page/)
+- [**Hugo**: Custom 404 Page](https://gohugo.io/templates/404/)
+- [**Jekyll**: Custom 404 Page](https://jekyllrb.com/tutorials/custom-404-page/)
+- [**Eleventy**: Adding a 404 Not Found Page](https://www.11ty.dev/docs/quicktips/not-found/)
 
-<Caption>
-  A <InlineCode>now.json</InlineCode> file, setting a{' '}
-  <InlineCode>404</InlineCode> status code for the{' '}
-  <InlineCode>/build/stats</InlineCode> route.
-</Caption>
+<Note>
+  If you are not using a framework, you can emit a{' '}
+  <InlineCode>404.html</InlineCode> file to the{' '}
+  <Link href="/docs/v2/build-step#output-directory">Output Directory</Link>.
+</Note>
 
-This would return a `404` status code for the `/build/stats` route.
-
-To provide a custom 404 route, you can rely on the filesystem, providing a custom error page if there are no matches. The code below shows an example of how to do this:
+If you need to assign a different file, you can use `routes`.
 
 ```json
 {
-  "version": 2,
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "status": 404, "dest": "/404.html" }
+    { "src": "/(.*)", "status": 404, "dest": "/other-404.html" }
   ]
 }
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file, setting a{' '}
-  <InlineCode>404</InlineCode> status code for any routes not matched in the
-  filesystem.
+  A <InlineCode>vercel.json</InlineCode> file, assigning{' '}
+  <InlineCode>other-404.html</InlineCode> as the 404 page for any path not
+  matched in the filesystem.
 </Caption>
 
-In the snippet above, precedence is given to the filesystem, routing only to `/404` if there is no match.
+In the snippet above, precedence is given to the filesystem, routing only to `/other-404.html` when no other file matches the requested path.
+
+In some rare cases, you may wish to set the status code to 404 regardless of the file's existence on the filesystem.
+
+```json
+{
+  "routes": [{ "src": "/stats", "status": 404, "dest": "/custom.html" }]
+}
+```
+
+<Caption>
+  A <InlineCode>vercel.json</InlineCode> file, setting a{' '}
+  <InlineCode>404</InlineCode> status code for the{' '}
+  <InlineCode>/stats</InlineCode> path.
+</Caption>
+
+In the snippet above, visiting the `/stats` path will respond with a `404` status code.
 
 ### SPA Fallback
 
@@ -451,7 +468,7 @@ A common pattern with single-page applications (SPAs) is to route everything tow
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file, providing a fallback to{' '}
+  A <InlineCode>vercel.json</InlineCode> file, providing a fallback to{' '}
   <InlineCode>index.html</InlineCode> after checking for matches against
   filesystem routes.
 </Caption>
@@ -498,7 +515,7 @@ If you want to create a route that **does not interfere with the other files in 
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file, providing a{' '}
+  A <InlineCode>vercel.json</InlineCode> file, providing a{' '}
   <InlineCode>/blog</InlineCode> route after checking for matches against
   filesystem routes.
 </Caption>
@@ -519,8 +536,8 @@ This is the equivalent of writing the routes below except when you add a new fil
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file, expanded to show the effect of using
-  the filesystem to handle routing.
+  A <InlineCode>vercel.json</InlineCode> file, expanded to show the effect of
+  using the filesystem to handle routing.
 </Caption>
 
 If you want to append headers to **block some of those paths**, you need a route that comes before `"handle": "filesystem"`:
@@ -542,7 +559,7 @@ If you want to append headers to **block some of those paths**, you need a route
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file that will continue matching routes
+  A <InlineCode>vercel.json</InlineCode> file that will continue matching routes
   after <InlineCode>/about.html</InlineCode> is matched.
 </Caption>
 
@@ -576,7 +593,7 @@ A common usage for `"continue": true` is to add global headers to routes, this i
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file using{' '}
+  A <InlineCode>vercel.json</InlineCode> file using{' '}
   <InlineCode>continue</InlineCode> to add global headers.
 </Caption>
 
@@ -634,7 +651,7 @@ When you need to rewrite the URL without matching, you should use `"continue": t
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> file using{' '}
+  A <InlineCode>vercel.json</InlineCode> file using{' '}
   <InlineCode>continue</InlineCode> to rewrite a URL without matching.
 </Caption>
 
@@ -677,7 +694,7 @@ Incorrect:
 ```
 
 <Caption>
-  An incorrect example of a <InlineCode>now.json</InlineCode> route.
+  An incorrect example of a <InlineCode>vercel.json</InlineCode> route.
 </Caption>
 
 Considering this example, `/test/file.json` would match, but `/test/file-json` would too. This is not intended. The `\\/` slashes are distracting and needless.
@@ -689,7 +706,7 @@ Correct:
 ```
 
 <Caption>
-  A correct example of a <InlineCode>now.json</InlineCode> route.
+  A correct example of a <InlineCode>vercel.json</InlineCode> route.
 </Caption>
 
 When using `rewrites`, the `.` character is considered a literal unless wrapped in a group.
@@ -718,7 +735,7 @@ A common pattern for URL slugs is catch-all except:
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> route using a catch-all except regex.
+  A <InlineCode>vercel.json</InlineCode> route using a catch-all except regex.
 </Caption>
 
 ```json
@@ -760,7 +777,7 @@ In order to make `/` use `www/index.html`, you have to create a route:
 ```
 
 <Caption>
-  A <InlineCode>now.json</InlineCode> route using a negative lookahead.
+  A <InlineCode>vercel.json</InlineCode> route using a negative lookahead.
 </Caption>
 
 `(?!blog/?)` is a negative lookahead and ensures the route doesn't start with `/blog/`.

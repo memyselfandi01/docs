@@ -3,6 +3,7 @@ import { Code, InlineCode } from '~/components/text/code'
 import { P } from '~/components/text'
 import Link from '~/components/text/link'
 import Note from '~/components/text/note'
+import ProductName from '~/components/name/product-name'
 
 export const meta = {
   editUrl:
@@ -12,13 +13,13 @@ export const meta = {
 
 # Git Integrations
 
-The following configuration options can be used through a `now.json` file like the [options above](#configuration).
+The following configuration options can be used through a `vercel.json` file like the [options above](#configuration).
 
 ## github.enabled
 
 **Type**: `Boolean`.
 
-When set to `false`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-for-github) will not deploy the given project regardless of the GitHub app being installed.
+When set to `false`, [<ProductName /> for GitHub](/docs/v2/git-integrations/vercel-for-github) will not deploy the given project regardless of the GitHub app being installed.
 
 <Code lang="json">{`{
   "github": {
@@ -30,10 +31,10 @@ When set to `false`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-fo
 
 **Type**: `Boolean`.
 
-When set to `false`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-for-github) will not apply the alias upon merge.
+When set to `false`, [<ProductName /> for GitHub](/docs/v2/git-integrations/vercel-for-github) will not apply the alias upon merge.
 
 <Code lang="json">{`{
-  "alias": ["my-zeit-website.com"],
+  "alias": ["example.com"],
   "github": {
     "autoAlias": false
   }
@@ -43,7 +44,7 @@ When set to `false`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-fo
 
 **Type**: `Boolean`.
 
-When set to `true`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-for-github) will stop commenting on pull requests and commits.
+When set to `true`, [<ProductName /> for GitHub](/docs/v2/git-integrations/vercel-for-github) will stop commenting on pull requests and commits.
 
 <Code lang="json">{`{
   "github": {
@@ -55,7 +56,7 @@ When set to `true`, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-for
 
 **Type**: `Boolean`.
 
-When set to false, [ZEIT Now for GitHub](/docs/v2/git-integrations/zeit-now-for-github) will always build pushes in sequence without cancelling a build for the most recent commit.
+When set to false, [<ProductName /> for GitHub](/docs/v2/git-integrations/vercel-for-github) will always build pushes in sequence without cancelling a build for the most recent commit.
 
 <Code lang="json">{`{
   "github": {

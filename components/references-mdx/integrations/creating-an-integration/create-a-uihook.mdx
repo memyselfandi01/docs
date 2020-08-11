@@ -3,6 +3,8 @@ import { TerminalInput } from '~/components/text/terminal'
 import { InlineCode } from '~/components/text/code'
 import Caption from '~/components/text/caption'
 import Link from '~/components/text/link'
+import ProductName from '~/components/name/product-name'
+import OrgName from '~/components/name/org-name'
 
 export const meta = {
   editUrl:
@@ -17,7 +19,7 @@ This step will detail the creation of a UIHook for a counter application. This e
 First, create an `index.js` file and add the following code:
 
 ```js
-const { withUiHook } = require('@zeit/integration-utils')
+const { withUiHook } = require('@vercel/integration-utils')
 
 let count = 0
 
@@ -33,42 +35,46 @@ module.exports = withUiHook(({ payload }) => {
 ```
 
 <Caption>
-  An example <InlineCode>index.js</InlineCode> file for a ZEIT Integration.
+  An example <InlineCode>index.js</InlineCode> file for a <OrgName />{' '}
+  Integration.
 </Caption>
 
 Inside the [UIHook](/docs/integrations#understanding-uihooks) there is a variable, `count`. Every time the [Button](#component-catalog/action-components/button) is clicked, the UIHook is called, thus updating the counter and **providing the updated HTML as a response**.
 
-This is happening inside the ZEIT Dashboard under a configuration page for this Integration.
+This is happening inside the <OrgName /> Dashboard under a configuration page for this Integration.
 
 <Note>
   You can find more complex examples{' '}
   <Link href="/docs/integrations#examples/">later in the documentation</Link> or
   you can view the code on the{' '}
-  <Link href="https://github.com/zeit/integrations">Integrations Gallery</Link>.
+  <Link href="https://github.com/vercel/integrations">
+    Integrations Gallery
+  </Link>
+  .
 </Note>
 
 ### Running the UIHook Locally
 
-With the [help of `now dev`](/docs/v2/development/basics), you can run your UIHook locally inside a **simulation of the ZEIT Now platform**.
+With the [help of `vercel dev`](/docs/v2/development/basics), you can run your UIHook locally inside a **simulation of the <ProductName /> platform**.
 
-By running your UIHook locally, you can test that your Integration, after creating the Integration with ZEIT, behaves as expected before deploying your Integration to production. This will be explored further in the next section.
+By running your UIHook locally, you can test that your Integration, after creating the Integration with <OrgName />, behaves as expected before deploying your Integration to production. This will be explored further in the next section.
 
-To run the UIHook locally, create a `now.json` file and add the following:
+To run the UIHook locally, create a `vercel.json` file and add the following:
 
 ```js
 {
   "name": "my-ui-hook",
   "version": 2,
-  "builds": [{ "src": "index.js", "use": "@now/node" }]
+  "builds": [{ "src": "index.js", "use": "@vercel/node" }]
 }
 ```
 
 <Caption>
-  An example <InlineCode>now.json</InlineCode> config file.
+  An example <InlineCode>vercel.json</InlineCode> config file.
 </Caption>
 
 Then, run the following commands:
 
 <TerminalInput>npm install</TerminalInput>
-<TerminalInput>now dev --listen 5005</TerminalInput>
+<TerminalInput>vercel dev --listen 5005</TerminalInput>
 <Caption>Running the created UIHook locally on port 5005.</Caption>

@@ -1,25 +1,11 @@
 import Note from '~/components/text/note'
 import Link from '~/components/text/link'
+import ProductName from '~/components/name/product-name'
+import { GITLAB_SYSTEM_ENVS } from '~/lib/data/system-env-variables'
+import SystemEnvVariablesTable from '~/components/env-variables/system-env-variables-table'
 
-You may want to use different workflows and APIs based on on Git information. To support this, ZEIT Now will deploy your app with the following built-in environment variables when deploying with ZEIT Now for GitLab.
-
-<Note label="hint">
-  These environment variables are available at both{' '}
-  <Link href="/docs/v2/platform/glossary#run-time">Run Time</Link> and{' '}
-  <Link href="/docs/v2/build-step">the Build Step</Link>.
-</Note>
+You may want to use different workflows and APIs based on Git information. To support this, the following [System Environment Variables](/docs/v2/build-step#system-environment-variables) can be added to your deployment:
 
 <br />
 
-| Variable Key                 | Description                                                               |
-| ---------------------------- | ------------------------------------------------------------------------- |
-| `GITLAB_DEPLOYMENT`          | An indicator for whether the app was deployed by ZEIT Now for GitLab.     |
-| `GITLAB_PROJECT_NAMESPACE`   | The GitLab user, group, or sub-group that the project belongs to.         |
-| `GITLAB_PROJECT_NAME`        | The name of the deployed project.                                         |
-| `GITLAB_PROJECT_ID`          | The ID of the deployed project.                                           |
-| `GITLAB_PROJECT_PATH`        | The GitLab project path.                                                  |
-| `GITLAB_COMMIT_REF`          | The branch that the deployment was triggered by.                          |
-| `GITLAB_COMMIT_SHA`          | The sha of the commit the deployment was triggered by.                    |
-| `GITLAB_COMMIT_MESSAGE`      | The message accompanying the commit that the deployment was triggered by. |
-| `GITLAB_COMMIT_AUTHOR_LOGIN` | The username belonging to the author of the commit that was deployed.     |
-| `GITLAB_COMMIT_AUTHOR_NAME`  | The name belonging to the author of the commit that was deployed.         |
+<SystemEnvVariablesTable envs={GITLAB_SYSTEM_ENVS} />

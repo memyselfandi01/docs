@@ -11,7 +11,9 @@ import { H1, H2, H3, H4, H5, P } from '~/components/text'
 import { Avatar } from '~/components/avatar'
 import HR from '~/components/text/hr'
 import { FooterFeedback } from '~/components/feedback-input'
+import Footer from '~/components/footer'
 import DeployBanner from '~/components/deploy-banner'
+import { PRODUCT_NAME } from '~/lib/constants'
 
 const DocH2 = ({ children }) => (
   <>
@@ -58,9 +60,8 @@ class Guide extends React.PureComponent {
   render() {
     const {
       meta = {
-        title: 'ZEIT Now Documentation',
-        description:
-          'The knowledge base and documentation for how to use ZEIT Now and how it works.'
+        title: `${PRODUCT_NAME} Documentation`,
+        description: `The knowledge base and documentation for how to use ${PRODUCT_NAME} and how it works.`
       }
     } = this.props
 
@@ -76,7 +77,7 @@ class Guide extends React.PureComponent {
         <>
           <Head
             titlePrefix=""
-            titleSuffix=" - ZEIT Now Guides"
+            titleSuffix={` - ${PRODUCT_NAME} Guides`}
             title={`${meta.title}`}
             description={meta.description}
             image={meta.image}
@@ -93,7 +94,13 @@ class Guide extends React.PureComponent {
             <Wrapper width="768">
               <section className="guide content">
                 {meta.example && meta.demo && (
-                  <DeployBanner example={meta.example} demo={meta.demo} />
+                  <DeployBanner
+                    env={meta.env}
+                    envDescription={meta.envDescription}
+                    envLink={meta.envLink}
+                    example={meta.example}
+                    demo={meta.demo}
+                  />
                 )}
                 {this.props.children}
                 <NonAmpOnly>
@@ -126,6 +133,7 @@ class Guide extends React.PureComponent {
                 />
               </section>
             </Wrapper>
+            <Footer />
           </article>
 
           <style jsx>{`

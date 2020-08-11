@@ -4,13 +4,14 @@ import Content from '~/components/layout/content'
 import Text, { H1, H4 } from '~/components/text'
 import { LinkList } from '~/components/list'
 import Link from '~/components/text/link'
+import { ORG_NAME } from '~/lib/constants'
 
 function ErrorPage() {
   return (
     <>
       <Head
         titlePrefix=""
-        titleSuffix=" - ZEIT Documentation"
+        titleSuffix={` - ${ORG_NAME} Documentation`}
         title="Page Not Found"
         description="The page that has been requested was not found."
       />
@@ -24,13 +25,13 @@ function ErrorPage() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M108.36 2.48l105.7 185.47H2.66L108.35 2.48z"
               fill="#fff"
               stroke="#EAEAEA"
-              stroke-width="2"
-              stroke-dasharray="4 4"
+              strokeWidth="2"
+              strokeDasharray="4 4"
             />
             <g filter="url(#filter0_d)">
               <ellipse
@@ -63,8 +64,8 @@ function ErrorPage() {
             </mask>
             <g mask="url(#a)">
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M108.36 2.48l105.7 185.47H2.66L108.35 2.48z"
                 fill="#000"
               />
@@ -77,9 +78,9 @@ function ErrorPage() {
                 width="212.65"
                 height="213.03"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix
                   in="SourceAlpha"
                   values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"

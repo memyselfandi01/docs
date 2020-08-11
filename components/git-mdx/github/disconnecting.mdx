@@ -1,11 +1,15 @@
 import { Image } from '~/components/media'
 import Caption from '~/components/text/caption'
+import ProductName from '~/components/name/product-name'
+import NameWrapper from '~/components/name/name-wrapper'
+import { PRODUCT_NAME, GITHUB_APP_NAME } from '~/lib/constants'
+import GithubAppName from '~/components/name/github-app-name'
 
-To disconnect your personal account or team on ZEIT Now from GitHub, take the following steps:
+To disconnect your personal account or team on <ProductName /> from GitHub, take the following steps:
 
 First, [click here](https://github.com/settings/profile) to go to the Settings page on GitHub.
 
-Then, if you've installed ZEIT Now for your **personal** GitHub account, click on **Applications**.
+Then, if you've installed <ProductName /> for your **personal** GitHub account, click on **Applications**.
 
 <Image
   src={`${process.env.ASSETS}/docs/git-integrations/github-applications.png`}
@@ -16,7 +20,7 @@ Then, if you've installed ZEIT Now for your **personal** GitHub account, click o
 />
 <Caption>Application Settings on GitHub.</Caption>
 
-Or, if you've installed ZEIT Now for your **organization** GitHub account, first click on the organization name:
+Or, if you've installed <ProductName /> for your **organization** GitHub account, first click on the organization name:
 
 <Image
   src={`${process.env.ASSETS}/docs/git-integrations/organization-settings.png`}
@@ -38,28 +42,28 @@ Then, click on **Installed GitHub Apps**:
 />
 <Caption>Organization Application Settings on GitHub.</Caption>
 
-#### Uninstall ZEIT Now
+#### Uninstall <NameWrapper name={GITHUB_APP_NAME} />
 
-Then, find the "Now" application and select the **Configure** button next to it.
+Then, find the "<GithubAppName />" application and select the **Configure** button next to it.
 
 <Image
-  src={`${process.env.ASSETS}/docs/git-integrations/configure-now-github.png`}
+  src={`${process.env.ASSETS}/docs/git-integrations/configure-github.png`}
   width={1510 / 2}
   height={160 / 2}
   shadow
   borderRadius
 />
-<Caption>Configure ZEIT Now on GitHub.</Caption>
+<Caption>Configure <GithubAppName /> on GitHub.</Caption>
 
 Finally, scroll to the bottom of the page and click **Uninstall**.
 
 <Image
-  src={`${process.env.ASSETS}/docs/git-integrations/uninstall-now-github.png`}
+  src={`${process.env.ASSETS}/docs/git-integrations/uninstall-github.png`}
   width={1328 / 2}
   height={310 / 2}
   shadow
   borderRadius
 />
-<Caption>Uninstall ZEIT Now from GitHub.</Caption>
+<Caption>Uninstall <GithubAppName /> from GitHub.</Caption>
 
-After disconnecting, you can always reconnect your ZEIT Now account to a GitHub account again.
+After disconnecting, you can always reconnect your <ProductName /> account to a GitHub account again.

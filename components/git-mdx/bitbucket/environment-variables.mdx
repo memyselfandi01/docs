@@ -1,24 +1,11 @@
 import Note from '~/components/text/note'
 import Link from '~/components/text/link'
+import ProductName from '~/components/name/product-name'
+import { BITBUCKET_SYSTEM_ENVS } from '~/lib/data/system-env-variables'
+import SystemEnvVariablesTable from '~/components/env-variables/system-env-variables-table'
 
-You may want to use different workflows and APIs based on on Git information. To support this, ZEIT Now will deploy your app with the following built-in environment variables when deploying with ZEIT Now for Bitbucket.
-
-<Note label="hint">
-  These environment variables are available at both{' '}
-  <Link href="/docs/v2/platform/glossary#run-time">Run Time</Link> and{' '}
-  <Link href="/docs/v2/build-step">the Build Step</Link>.
-</Note>
+You may want to use different workflows and APIs based on Git information. To support this, the following [System Environment Variables](/docs/build-step#system-environment-variables) can be added to your deployment:
 
 <br />
 
-| Variable Key                   | Description                                                                 |
-| ------------------------------ | --------------------------------------------------------------------------- |
-| `BITBUCKET_DEPLOYMENT`         | An indicator for whether the deployment was made by ZEIT Now for Bitbucket. |
-| `BITBUCKET_REPO_OWNER`         | The Bitbucket user or team that the project belongs to.                     |
-| `BITBUCKET_REPO_SLUG`          | The slug of the Bitbucket repository that was deployed.                     |
-| `BITBUCKET_REPO_NAME`          | The name of the Bitbucket repository that was deployed.                     |
-| `BITBUCKET_COMMIT_REF`         | The branch that the deployment was triggered by.                            |
-| `BITBUCKET_COMMIT_SHA`         | The sha of the commit the deployment was triggered by.                      |
-| `BITBUCKET_COMMIT_MESSAGE`     | The message accompanying the commit that was deployed.                      |
-| `BITBUCKET_COMMIT_AUTHOR_NAME` | The name of the commit author.                                              |
-| `BITBUCKET_COMMIT_AUTHOR_URL`  | Bitbucket profile URL of the commit author.                                 |
+<SystemEnvVariablesTable envs={BITBUCKET_SYSTEM_ENVS} />

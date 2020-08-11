@@ -7,8 +7,11 @@ import Layout from '~/components/layout/app'
 import DataContext from '~/lib/data-context'
 
 import baseTheme from '../styles/themes/base'
+import fontTheme from '../styles/themes/font'
 import withTypeStyles from '../styles/with-type'
 import nprogressStyles from '../styles/nprogress'
+
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState({})
@@ -36,13 +39,16 @@ function MyApp({ Component, pageProps }) {
               <script
                 async
                 dangerouslySetInnerHTML={{
-                  __html: fullStoryScript
+                  __html: fullStoryScript,
                 }}
               />
             )}
         </Head>
         <Layout data={data}>
           <Component {...pageProps} />
+          <style jsx global>
+            {fontTheme}
+          </style>
           <style jsx global>
             {baseTheme}
           </style>

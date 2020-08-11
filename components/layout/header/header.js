@@ -15,7 +15,7 @@ import LayoutHeader from './header-wrapper'
 import Logo from '~/components/icons/logo'
 import MenuToggle from './menu-toggle'
 import { HeaderFeedback } from '~/components/feedback-input'
-import { API_DOCS_FEEDBACK } from '~/lib/constants'
+import { ORG_NAME, PRODUCT_SHORT_NAME } from '~/lib/constants'
 import MenuPopOver from '~/components/layout/header/menu-popover'
 import DocsNavbarDesktop from '~/components/layout/navbar/desktop'
 
@@ -26,7 +26,7 @@ function AmpUserFeedback() {
   return (
     <>
       <a href={router.pathname} className="feedback-link">
-        <HeaderFeedback loggedOut />
+        <HeaderFeedback email />
       </a>
       <NavigationItem customLink>
         <a href="/blog">Blog</a>
@@ -117,16 +117,6 @@ class Header extends Component {
     this.setState(() => ({
       menuActive: false
     }))
-  }
-
-  handleFeedbackSubmit = async (feedback, done) => {
-    const res = await fetch(API_DOCS_FEEDBACK, {
-      method: 'POST',
-      body: JSON.stringify(feedback)
-    })
-    if (res.status !== 200) {
-      done('Sorry, something went wrong, please try again.')
-    } else done()
   }
 
   renderMenuTrigger = ({ handleProviderRef, menu }) => {
@@ -256,10 +246,10 @@ class Header extends Component {
             <a
               className="logo"
               href={dashboard}
-              aria-label="ZEIT Home"
+              aria-label={`${ORG_NAME} Home`}
               onContextMenu={this.onLogoRightClick}
             >
-              <Logo height="25px" width="28px" />
+              <Logo height={25} />
             </a>
 
             {!isAmp && (
@@ -274,7 +264,7 @@ class Header extends Component {
                       router.pathname.startsWith('/docs') &&
                       !router.pathname.startsWith('/docs/api') &&
                       !router.pathname.startsWith('/docs/integrations') &&
-                      !router.pathname.startsWith('/docs/now-cli') &&
+                      !router.pathname.startsWith('/docs/cli') &&
                       !router.pathname.startsWith('/docs/runtimes') &&
                       !router.pathname.startsWith('/docs/configuration')
                     }
@@ -295,7 +285,7 @@ class Header extends Component {
                       active:
                         router.pathname.startsWith('/docs/api') ||
                         router.pathname.startsWith('/docs/integrations') ||
-                        router.pathname.startsWith('/docs/now-cli') ||
+                        router.pathname.startsWith('/docs/cli') ||
                         router.pathname.startsWith('/docs/runtimes') ||
                         router.pathname.startsWith('/docs/configuration')
                     })}
@@ -305,8 +295,8 @@ class Header extends Component {
                       offsetLeft={-62}
                       primaryList={[
                         {
-                          title: 'Now CLI',
-                          url: '/docs/now-cli'
+                          title: `${PRODUCT_SHORT_NAME} CLI`,
+                          url: '/docs/cli'
                         },
                         {
                           title: 'Configuration',
@@ -352,10 +342,7 @@ class Header extends Component {
                     <Fragment>
                       {!user ? (
                         <Fragment>
-                          <HeaderFeedback
-                            onFeedback={this.handleFeedbackSubmit}
-                            loggedOut
-                          />
+                          <HeaderFeedback email />
                           <NavigationItem href="/blog">Blog</NavigationItem>
                           <NavigationItem className="chat" href="/support">
                             Support
@@ -364,9 +351,7 @@ class Header extends Component {
                         </Fragment>
                       ) : (
                         <Fragment>
-                          <HeaderFeedback
-                            onFeedback={this.handleFeedbackSubmit}
-                          />
+                          <HeaderFeedback />
                           <NavigationItem href="/blog">Blog</NavigationItem>
                           <NavigationItem className="chat" href="/support">
                             Support
@@ -404,7 +389,7 @@ class Header extends Component {
                     router.pathname.startsWith('/docs') &&
                     !router.pathname.startsWith('/docs/api') &&
                     !router.pathname.startsWith('/docs/integrations') &&
-                    !router.pathname.startsWith('/docs/now-cli') &&
+                    !router.pathname.startsWith('/docs/cli') &&
                     !router.pathname.startsWith('/docs/runtimes') &&
                     !router.pathname.startsWith('/docs/configuration')
                   }
@@ -415,7 +400,7 @@ class Header extends Component {
                 {router.pathname.startsWith('/docs') &&
                   !router.pathname.startsWith('/docs/api') &&
                   !router.pathname.startsWith('/docs/integrations') &&
-                  !router.pathname.startsWith('/docs/now-cli') &&
+                  !router.pathname.startsWith('/docs/cli') &&
                   !router.pathname.startsWith('/docs/runtimes') &&
                   !router.pathname.startsWith('/docs/configuration') && (
                     <div className="navigation">
@@ -433,6 +418,13 @@ class Header extends Component {
                 onClick={handleIndexClick}
               >
                 Guides
+              </NavigationItem>
+              <NavigationItem
+                href="/knowledge"
+                active={router.pathname.startsWith('/knowledge')}
+                onClick={handleIndexClick}
+              >
+                Knowledge
               </NavigationItem>
             </div>
 
@@ -458,11 +450,11 @@ class Header extends Component {
               </div>
               <div className="group">
                 <NavigationItem
-                  href="/docs/now-cli"
-                  active={router.pathname.startsWith('/docs/now-cli')}
+                  href="/docs/cli"
+                  active={router.pathname.startsWith('/docs/cli')}
                   onClick={handleIndexClick}
                 >
-                  Now CLI
+                  {PRODUCT_SHORT_NAME} CLI
                 </NavigationItem>
               </div>
               <div className="group">
@@ -501,9 +493,9 @@ class Header extends Component {
             transition: all 0.1s ease;
             position: fixed;
             overflow-y: auto;
-            top: 80px;
-            z-index: 1000;
-            max-height: calc(100vh - 80px);
+            top: 64px;
+            z-index: 1;
+            max-height: calc(100vh - 64px);
             background: var(--geist-background);
           }
 
@@ -557,10 +549,6 @@ class Header extends Component {
 
           .mobile-navigation .navigation :global(a) {
             font-size: 1rem;
-          }
-
-          :global(.header .feedback-link) {
-            display: inherit;
           }
 
           :global(.header .left-nav),
@@ -646,11 +634,6 @@ class Header extends Component {
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s linear 300ms, opacity 300ms;
-          }
-
-          :global(.geist-feedback-input:not(.focused) > textarea) {
-            height: 24px ${isAmp ? '' : '!important'};
-            top: 0 ${isAmp ? '' : '!important'};
           }
 
           @media screen and (max-width: 950px) {

@@ -8,14 +8,14 @@ class Heading extends React.Component {
       component,
       {
         className: [className, component.props.className || ''].join(' '),
-        ...rest
+        ...rest,
       },
       children
     )
   }
 }
 
-export default props => {
+const LinkedHeading = (props) => {
   const { offsetTop } = props
   const component = props.children
   const children = component.props.children || ''
@@ -26,20 +26,19 @@ export default props => {
   if (null == id) {
     if (typeof children === 'object' && !Array.isArray(children)) {
       // if the child is a component, convert it to its children
-      text = children.props.children
+      text = children.props.name || children.props.children
     } else if (Array.isArray(children)) {
       // If there are sub components, convert them to text
       text = children
-        .map(child => {
-          return typeof child === 'object' ? child.props.children : child
+        .map((child) => {
+          return typeof child === 'object'
+            ? child.props.name || child.props.children
+            : child
         })
         .join('')
     }
 
-    id = text
-      .toLowerCase()
-      .replace(/\s/g, '-')
-      .replace(/[?!]/g, '')
+    id = text.toLowerCase().replace(/\s/g, '-').replace(/[?!]/g, '')
   }
 
   const href = props.noAnchor ? '#' : '#' + id
@@ -97,3 +96,5 @@ export default props => {
     </Heading>
   )
 }
+
+export default LinkedHeading

@@ -5,31 +5,33 @@ import Example from '~/components/example'
 import Link from '~/components/text/link'
 import Note from '~/components/text/note'
 import Tag from '~/components/text/tag'
+import ProductName from '~/components/name/product-name'
+import OrgName from '~/components/name/org-name'
 
 export const meta = {
   editUrl:
     'pages/docs/runtimes/runtimes-mdx/official-runtimes/official-runtimes.mdx',
-  lastEdited: '2019-10-22T21:47:59.000Z'
+  lastEdited: '2019-10-22T21:47:59.000Z',
 }
 
 # Official Runtimes
 
-Runtimes are modules that transform your source code into [Serverless Functions](/docs/v2/serverless-functions/introduction/), which are served by our [CDN at the edge](/docs/v2/network/caching/).
+Runtimes are modules that transform your source code into [Serverless Functions](/docs/v2/serverless-functions/introduction/), which are served by our [CDN at the edge](/docs/v2/edge-network/caching/).
 
 <Note type="warning">
   In most cases, advanced Runtimes usage with configuration is not necessary.
   See{' '}
-  <Link href="/docs/v2/introduction">
-    the ZEIT Now Introduction documentation
+  <Link href="/docs/introduction">
+    the <ProductName /> Introduction documentation
   </Link>{' '}
   or the{' '}
-  <Link href="/docs/v2/serverless-functions/introduction">
+  <Link href="/docs/serverless-functions/introduction">
     Serverless Functions documentation
   </Link>{' '}
   for more information.
 </Note>
 
-Listed below are all official Runtimes from ZEIT.
+Listed below are all official Runtimes from <OrgName />.
 
 | Runtime                               | Description                                                                                                                                  |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -74,7 +76,7 @@ If you need more advanced behavior, such as a custom build step or private npm m
 
 ### Node.js Version
 
-New deployments automatically select the latest LTS Node.js version available on ZEIT Now at that point in time.
+New deployments automatically select the latest LTS Node.js version available on <ProductName /> at that point in time.
 
 In order to select a different version, add a `package.json` file with an `engines` field, like so:
 
@@ -118,9 +120,9 @@ The Node.js Runtime supports files ending with `.ts` inside of the `/api` direct
 An example TypeScript file that exports a default Node.js function and takes in [the standard Node.js Request and Response](#official-runtimes/node-js/node-js-request-and-response-objects) objects is as follows:
 
 ```js
-import { NowRequest, NowResponse } from '@now/node'
+import { NowRequest, NowResponse } from '@vercel/node'
 
-export default function(req: NowRequest, res: NowResponse) {
+export default function (req: NowRequest, res: NowResponse) {
   const { name = 'World' } = req.query
   res.send(`Hello ${name}!`)
 }
@@ -128,13 +130,16 @@ export default function(req: NowRequest, res: NowResponse) {
 
 <Caption>
   An example serverless Node.js function written in TypeScript, using types from
-  the <InlineCode>@now/node</InlineCode> module for the helper methods.
+  the <InlineCode>@vercel/node</InlineCode> module for the helper methods.
 </Caption>
 
-The `NowRequest` and `NowResponse` imports in the above example are types that we provide for [the Request and Response objects](#official-runtimes/node-js/node-js-request-and-response-objects), including the helper methods with ZEIT Now. These types can be installed from npm with the following command:
+The `NowRequest` and `NowResponse` imports in the above example are types that we provide for [the Request and Response objects](#official-runtimes/node-js/node-js-request-and-response-objects), including the helper methods with <ProductName />. These types can be installed from npm with the following command:
 
-<Snippet dark text="npm install @now/node --save-dev" />
-<Caption>Installing <InlineCode>@now/node</InlineCode> for types when using Node.js on ZEIT Now.</Caption>
+<Snippet width="100%" dark text="npm install @vercel/node --save-dev" />
+<Caption>
+  Installing <InlineCode>@vercel/node</InlineCode> for types when using Node.js
+  on <ProductName />.
+</Caption>
 
 You can also use a `tsconfig.json` file at the root of your project to configure the TypeScript compiler. Most options are supported aside from ["Path Mappings"](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping) and ["Project References"](https://www.typescriptlang.org/docs/handbook/project-references.html).
 
@@ -144,16 +149,16 @@ Each request to a Node.js Serverless Function gives access to Request and Respon
 
 #### Node.js Helpers
 
-ZEIT Now additionally provides helper methods inside of the Request and Response objects passed to Node.js Serverless Functions. These methods are:
+&#8203;<ProductName /> additionally provides helper methods inside of the Request and Response objects passed to Node.js Serverless Functions. These methods are:
 
-| method             | description                                                                                                                                                                                    | object   |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `req.query`        | An object containing the request's [query string](https://en.wikipedia.org/wiki/Query_string), or `{}` if the request does not have a query string.                                            | Request  |
-| `req.cookies`      | An object containing the cookies sent by the request, or `{}` if the request contains no cookies.                                                                                              | Request  |
-| `req.body`         | An object containing the body sent by the request, or `null` if no body is sent.                                                                                                               | Request  |
-| `res.status(code)` | A function to set the status code sent with the response where `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Returns `res` for chaining. | Response |
-| `res.send(body)`   | A function to set the content of the response where `body` can be a `string`, an `object` or a `Buffer`.                                                                                       | Response |
-| `res.json(obj)`    | A function to send a JSON response where `obj` is the JSON object to send.                                                                                                                     | Response |
+| method                                                                                     | description                                                                                                                                                                                    | object   |
+| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `req.query`                                                                                | An object containing the request's [query string](https://en.wikipedia.org/wiki/Query_string), or `{}` if the request does not have a query string.                                            | Request  |
+| `req.cookies`                                                                              | An object containing the cookies sent by the request, or `{}` if the request contains no cookies.                                                                                              | Request  |
+| [`req.body`](#official-runtimes/node-js/node-js-request-and-response-objects/request-body) | An object containing the body sent by the request, or `null` if no body is sent.                                                                                                               | Request  |
+| `res.status(code)`                                                                         | A function to set the status code sent with the response where `code` must be a valid [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). Returns `res` for chaining. | Response |
+| `res.send(body)`                                                                           | A function to set the content of the response where `body` can be a `string`, an `object` or a `Buffer`.                                                                                       | Response |
+| `res.json(obj)`                                                                            | A function to send a JSON response where `obj` is the JSON object to send.                                                                                                                     | Response |
 
 The following Node.js Serverless Function example showcases the use of `req.query`, `req.cookies` and `req.body` helpers:
 
@@ -181,7 +186,7 @@ module.exports = (req, res) => {
 </Caption>
 
 <Note>
-  If needed, you can opt-out of ZEIT Now providing{' '}
+  If needed, you can opt-out of <ProductName /> providing{' '}
   <InlineCode>helpers</InlineCode> using{' '}
   <Link href="#advanced-usage/advanced-node-js-usage/disabling-helpers-for-node-js">
     advanced configuration
@@ -205,13 +210,45 @@ We follow a set of rules on the `Content-type` header sent by the request to do 
 
 With the `req.body` helper, you can build applications without extra dependencies or having to [parse the content of the request manually](https://nodejs.org/ja/docs/guides/anatomy-of-an-http-transaction/#request-body).
 
+<Note>
+  The <InlineCode>req.body</InlineCode> helper is set using a{' '}
+  <Link
+    tab
+    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get"
+  >
+    JavaScript getter
+  </Link>
+  . In turn, it is only computed when it is accessed.
+</Note>
+
+When the request body contains malformed JSON, accessing `req.body` will throw an error. You can catch that error by wrapping `req.body` with [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch):
+
+```js
+try {
+  req.body
+} catch (error) {
+  return res.status(400).json({ error: 'My custom 400 error' })
+}
+```
+
+<Caption>
+  Catching the error thrown by <InlineCode>req.body</InlineCode> with{' '}
+  <Link
+    tab
+    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch"
+  >
+    <InlineCode>try...catch</InlineCode>
+  </Link>
+  .
+</Caption>
+
 ---
 
 ## Go
 
 <Tag>Status: Alpha</Tag>
 
-The Go Runtime is used by ZEIT Now to compile Go Serverless Functions that expose a single HTTP handler, from a `.go` file within an `/api` directory at your project's root.
+The Go Runtime is used by <ProductName /> to compile Go Serverless Functions that expose a single HTTP handler, from a `.go` file within an `/api` directory at your project's root.
 
 For example, define an `index.go` file inside an `/api` directory as follows:
 
@@ -224,7 +261,7 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintf(w, "<h1>Hello from Go on Now!</h1>")
+  fmt.Fprintf(w, "<h1>Hello from Go!</h1>")
 }
 ```
 
@@ -246,7 +283,7 @@ For advanced usage, such as using private packages with your Go projects, see th
 
 ### Go Version
 
-Go version 1.x is used for Go projects deployed with ZEIT Now.
+Go version 1.x is used for Go projects deployed with <ProductName />.
 
 ### Go Dependencies
 
@@ -254,7 +291,7 @@ The Go Runtime will automatically detect a `go.mod` file to install dependencies
 
 ### Go Build Configuration
 
-You can provide custom build flags by using the `GO_BUILD_FLAGS` [build environment variable](/docs/v2/build-step/#using-environment-variables-and-secrets).
+You can provide custom build flags by using the `GO_BUILD_FLAGS` [build environment variable](/docs/v2/build-step#environment-variables).
 
 ```json
 {
@@ -279,7 +316,7 @@ You can provide custom build flags by using the `GO_BUILD_FLAGS` [build environm
 
 <Tag>Status: Beta</Tag>
 
-The Python Runtime is used by ZEIT Now to compile Python Serverless Functions, that defines a singular HTTP `handler` variable, inheritting from the `BaseHTTPRequestHandler` class, from a `.py` file within an `/api` directory at your project's root.
+The Python Runtime is used by <ProductName /> to compile Python Serverless Functions, that defines a singular HTTP `handler` variable, inheritting from the `BaseHTTPRequestHandler` class, from a `.py` file within an `/api` directory at your project's root.
 
 For example, define an `index.py` file inside a `/api` directory as follows:
 
@@ -293,7 +330,7 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        message = cow.Cowacter().milk('Hello from Python from a ZEIT Now Serverless Function!')
+        message = cow.Cowacter().milk('Hello from Python from a Serverless Function!')
         self.wfile.write(message.encode())
         return
 ```
@@ -318,7 +355,7 @@ For advanced usage, such as using WSGI or ASGI for your Python projects, see the
 
 ### Python Version
 
-Python projects deployed with ZEIT Now use Python version 3.6.
+Python projects deployed with <ProductName /> use Python version 3.6.
 
 ### Python Dependencies
 
@@ -330,7 +367,7 @@ You can install dependencies for your Python projects by defining them in a `req
 
 <Tag>Status: Alpha</Tag>
 
-The Ruby Runtime is used by ZEIT Now to compile Ruby Serverless Functions that define a singular HTTP handler from `.rb` files within an `/api` directory at your project's root.
+The Ruby Runtime is used by <ProductName /> to compile Ruby Serverless Functions that define a singular HTTP handler from `.rb` files within an `/api` directory at your project's root.
 
 Ruby files must have one of the following variables defined:
 
@@ -346,7 +383,7 @@ Handler = Proc.new do |req, res|
   name = req.query['name'] || 'World'
 
   res.status = 200
-  res['Content-Type'] = 'text/plain'
+  res['Content-Type'] = 'text/text; charset=utf-8'
   res.body = Cowsay.say("Hello #{name}", 'cow')
 end
 ```
@@ -368,8 +405,6 @@ gem "cowsay", "~> 0.3.0"
   An example <InlineCode>Gemfile</InlineCode> file that defines{' '}
   <InlineCode>cowsay</InlineCode> as a dependency.
 </Caption>
-
-For advanced usage, such as using a Rack Interface for your Ruby projects, see the [Advanced Ruby Usage section](#advanced-usage/advanced-ruby-usage).
 
 ### Ruby Version
 

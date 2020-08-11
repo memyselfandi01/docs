@@ -4,13 +4,19 @@ import Caption from '~/components/text/caption'
 import Note from '~/components/text/note'
 import Card from '~/components/card'
 import { InlineCode } from '~/components/text/code'
+import Strong from '~/components/text/strong'
 import { Image } from '~/components/media'
+import ProductName from '~/components/name/product-name'
+import OrgName from '~/components/name/org-name'
+import ProductShortName from '~/components/name/product-short-name'
+import { SYSTEM_ENVS } from '~/lib/data/system-env-variables'
+import SystemEnvVariablesTable from '~/components/env-variables/system-env-variables-table'
 
-When you trigger a deploy, ZEIT Now **builds** your project. For many frontend frameworks, ZEIT Now automatically configures the build settings, but you can also [customize](#customizing-build-settings) them. You can also use [environment variables](#using-environment-variables-and-secrets) to avoid hardcoding values.
+When you trigger a deploy, <ProductName /> **builds** your project. For many frontend frameworks, <ProductName /> automatically configures the build settings, but you can also [customize](#customizing-build-settings) them. You can also use [environment variables](#environment-variables) to avoid hardcoding values.
 
 ## Customizing Build Settings
 
-To customize the build settings for your project, choose a project from the [dashboard](https://zeit.co/dashboard):
+To customize the build settings for your project, choose a project from the [dashboard](/dashboard):
 
 <Image
   src={`${process.env.ASSETS}/docs/common/select-project.png`}
@@ -18,7 +24,9 @@ To customize the build settings for your project, choose a project from the [das
   height={410 / 2}
   shadow
 />
-<Caption>Selecting the project from the ZEIT Dashboard.</Caption>
+<Caption>
+  Selecting the project from the <OrgName /> Dashboard.
+</Caption>
 
 Then, select the **Settings** tab:
 
@@ -29,13 +37,15 @@ Then, select the **Settings** tab:
   shadow
   borderRadius
 />
-<Caption>Selecting the <b>Settings</b> tab from the Project Overview page.</Caption>
+<Caption>
+  Selecting the <b>Settings</b> tab from the Project Overview page.
+</Caption>
 
-You can then edit the build settings from the **Build & Development Settings** and **Root Directory** sections.
+You can then edit the build settings from the **Build & Development Settings**, **Root Directory**, and **Environment Variables** sections.
 
 ### Build & Development Settings
 
-ZEIT Now tries to automatically detect the frontend framework you’re using for your project and configure the project settings for you. If you’d like to override the settings or specify a different framework, you can do so from the **Build & Development Settings** section.
+&#8203;<ProductName /> tries to automatically detect the frontend framework you’re using for your project and configure the project settings for you. If you’d like to override the settings or specify a different framework, you can do so from the **Build & Development Settings** section.
 
 #### Framework Preset
 
@@ -47,7 +57,7 @@ ZEIT Now tries to automatically detect the frontend framework you’re using for
 />
 <Caption>The Framework Preset setting.</Caption>
 
-ZEIT Now detects the following frontend frameworks automatically and chooses the best default settings for you.
+&#8203;<ProductName /> detects the following frontend frameworks automatically and chooses the best default settings for you.
 
 <div>{props.frameworks}</div>
 
@@ -65,7 +75,7 @@ You can always choose a different framework preset or "Other" if you’d like.
 />
 <Caption>The Build Command setting.</Caption>
 
-If ZEIT Now detects a framework, the Build Command will automatically be configured. Depending on a framework, the Build Command can refer to the project’s configuration file.
+If <ProductName /> detects a framework, the Build Command will automatically be configured. Depending on a framework, the Build Command can refer to the project’s configuration file.
 
 For example, if you choose [Next.js](https://nextjs.org/), here’s what happens by default:
 
@@ -79,12 +89,17 @@ If you’d like to override the Build Command, you can turn on the **Override** 
   deployment.
 </Note>
 
-**If build is not required**: Some projects do not require building. An example of this would be a website with basic HTML/CSS/JS/assets that can be deployed directly without building (For example, you might just have a single `index.html` file).
+##### Skip Build Step
+
+Some static projects do not require building. An example of this would be a website with only HTML/CSS/JS source files that can be served as-is (For example, you might just have a single `index.html` file).
 
 In such cases, you should:
 
 - Specify "Other" as the framework preset, and
-- Override the Build Command and leave it empty. This will make ZEIT Now to skip the build step.
+- Enable the Override option for the Build Command, and
+- Leave the Build Command empty.
+
+This will prevent the build from being attempted and serve your content as-is.
 
 #### Output Directory
 
@@ -96,9 +111,9 @@ In such cases, you should:
 />
 <Caption>The Output Directory setting.</Caption>
 
-After building a project, most frameworks will output the result in a directory. Contents in this **output directory** will be the only things that will be statically served by ZEIT Now.
+After building a project, most frameworks will output the result in a directory. Contents in this **output directory** will be the only things that will be statically served by <ProductName />.
 
-If ZEIT Now detects a framework, the output directory will automatically be configured.
+If <ProductName /> detects a framework, the output directory will automatically be configured.
 
 <Note>
   If you update this setting, it will be applied starting with your next
@@ -122,24 +137,24 @@ In some cases, your project might not require building, and you might just want 
 <Caption>The Development Command setting.</Caption>
 
 <Note>
-  This setting is relevant only if you’re using <InlineCode>now dev</InlineCode>{' '}
-  locally to develop your project. You should be using{' '}
-  <InlineCode>now dev</InlineCode> only if you need to use a ZEIT Now platform
-  feature like{' '}
-  <Link href="/docs/v2/serverless-functions/introduction">
+  This setting is relevant only if you’re using{' '}
+  <InlineCode>vercel dev</InlineCode> locally to develop your project. You
+  should be using <InlineCode>vercel dev</InlineCode> only if you need to use a{' '}
+  <ProductName /> platform feature like{' '}
+  <Link href="/docs/serverless-functions/introduction">
     Serverless Functions
   </Link>
   . In other cases, you should use the development command your framework provides
   (such as <InlineCode>next dev</InlineCode> for Next.js).
 </Note>
 
-The Development Command setting allows you to customize the behavior of <InlineCode>now dev</InlineCode>. If ZEIT Now detects a framework, the development command will automatically be configured.
+The Development Command setting allows you to customize the behavior of <InlineCode>vercel dev</InlineCode>. If <ProductName /> detects a framework, the development command will automatically be configured.
 
-If you’d like to use a custom command for <InlineCode>now dev</InlineCode>, you can turn on the **Override** toggle. Please note the following:
+If you’d like to use a custom command for <InlineCode>vercel dev</InlineCode>, you can turn on the **Override** toggle. Please note the following:
 
 - If you specify a custom command, your command must pass the `$PORT` variable (which contains the port number) to your framework. For example, for [Next.js](https://nextjs.org/), you should use: `next dev --port $PORT`.
-- If the development command is not specified, `now dev` will fail. If you selected "Other" as the framework preset, the development command will be empty by default.
-- You must create a deployment and have your local project be linked to the project on ZEIT Now (using `now`). Otherwise, `now dev` won’t work correctly.
+- If the development command is not specified, `vercel dev` will fail. If you selected "Other" as the framework preset, the development command will be empty by default.
+- You must create a deployment and have your local project be linked to the project on <ProductName /> (using `vercel`). Otherwise, `vercel dev` won’t work correctly.
 
 ### Root Directory
 
@@ -156,131 +171,142 @@ In some projects, the top-level directory of the repository may not be the root 
 In cases like this, you can specify the project root directory. If you do so, please note the following:
 
 - If you specify a root directory, then your app won’t be able to access files outside of that directory. You also cannot use `..` to move up a level.
-- This setting also applies to [Now CLI](/download). Instead of running `now <directory-name>` to deploy, specify `<directory-name>` here so you can just run `now`.
+- This setting also applies to [<ProductShortName /> CLI](/download). Instead of running `vercel <directory-name>` to deploy, specify `<directory-name>` here so you can just run `vercel`.
 
 <Note>
   If you update this setting, it will be applied starting with your next
   deployment.
 </Note>
 
-## Using Environment Variables and Secrets
+## Environment Variables
 
-When building your project, it may be necessary to use [environment variables](https://en.wikipedia.org/wiki/Environment_variable).
+Environment Variables are accessible during both **Build Step** and **Runtime**, and can be configured for **Production**, **Preview**, and **Development** Environments individually.
 
-Adding environment variables requires two steps, defining the environment variable, then making it available to your projects' build step.
+This allows you to include values that you don't want to share in your code or to change the behavior of your code depending on its Environment.
+
+To declare an Environment Variable for your deployment, head to the **Environment Variables** page of your **Project Settings**.
+
+<Image
+  src={`${process.env.ASSETS}/docs/build-step/env-vars-empty.png`}
+  width={1610 / 2}
+  height={800 / 2}
+  shadow
+/>
+<Caption>The Environment Variables settings.</Caption>
+
+First, choose between the following **Environments**:
+
+| Environment     | Description                                                                                                                                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Production**  | When selected, the Environment Variable will be applied to your next Production Deployment. To create a Production Deployment, push a commit to the [Production Branch](/docs/git-integrations#production-branch) or run `vercel --prod`. |
+| **Preview**     | The Environment Variable is applied to your next Preview Deployment. Preview Deployments are created when you push to a branch (for example, `my-new-feature`) or run `vercel`.                                                           |
+| **Development** | The Environment Variable is for use when running your project locally, with `vercel dev` or your preferred development command. To download Development Environment Variables, run `vercel env pull`.                                     |
+
+Enter the **Name** of the Environment Variable. For example, if you are using Node.js and you create an Environment Variable named `SENTRY_KEY`, it will be available under `process.env.SENTRY_KEY` in your code.
+
+Then, enter the **Value** of the Environment Variable. The value is automatically encrypted and stored as a _Secret_ in our system when you click **Add**.
+
+<Image
+  src={`${process.env.ASSETS}/docs/build-step/env-vars-user.png`}
+  width={1610 / 2}
+  height={630 / 2}
+  shadow
+/>
+<Caption>Adding an Environment Variable in the Project Settings.</Caption>
+
+Once added, the Environment Variable is applied to your subsequent deployment.
+It can then be consumed during **Build Step** by the framework of your choice, or by a Serverless Function at **Runtime**.
 
 <Note>
-  This section covers how to make environment variables available at{' '}
-  <b>Build Time</b>, if you would like to make them available during{' '}
-  <b>Run Time</b>, please see the{' '}
-  <Link href="/docs/v2/serverless-functions/env-and-secrets/">
-    Serverless Functions documentation
-  </Link>
-  .
+  If any Environment Variables differ between Deployments,{' '}
+  <Link href="/docs/platform/deployments#deduplication">deduplication</Link>{' '}
+  will always be bypassed. For example, this means that merging to the default
+  branch will no longer result in an instant deployment.
 </Note>
 
-### Adding Secrets
+### Development Environment Variables
 
-To define an environment variable, you should use **Now Secrets**. By using **Now Secrets**, the data will be encrypted and stored securely, no longer directly accessible by anyone, and only exposed to deployments as environment variables.
+Environment Variables created for the Development Environment can be downloaded into a local development setup using the `vercel env pull` command provided by [<ProductShortName /> CLI](/download):
 
-Adding **Now Secrets** can be done with [Now CLI](/download), providing three options to work with them.
+<Snippet
+  width="100%"
+  clipboard={false}
+  dark
+  text={`vercel env pull
+Downloading Development Environment Variables for project my-lovely-project
+✅ Created .env file [510ms]`}
+/>
+<Caption>
+  Downloading Development Environment Variables with `vercel env pull`.
+</Caption>
+
+Running the command will create a `.env` file in your project folder. The `.env` file can then be consumed by `vercel dev` or
+your preferred development command.
+
+Check out the [<ProductShortName /> CLI reference](/docs/cli#commands/env) to learn more about `vercel env` commands.
+
+### Integration Environment Variables
+
+[Integrations](/integrations) can automatically add Environment Variables to your Project Settings.
+In that case, the Integration Configuration that added it will be displayed:
+
+<Image
+  src={`${process.env.ASSETS}/docs/build-step/env-vars-integration.png`}
+  width={1610 / 2}
+  height={740 / 2}
+  shadow
+/>
+<Caption>
+  Adding an Integration Environment Variable in the Project Settings.
+</Caption>
 
 <Note>
-  When adding Now Secrets with Now CLI, the secret name is automatically
-  lowercased before being stored.
+  Support for Integration Environment Variables was added on April 10th, 2020.
+  Variables added before that date do not have the <Strong>Integration</Strong>{' '}
+  indication.
 </Note>
 
-To **define a Now Secret**, use the following command:
+### System Environment Variables
 
-<Snippet dark text="now secrets add <secret-name> <secret-value>"/>
-<Caption>Defining a <b>Now Secret</b> using <Link href="/now">Now CLI</Link>.</Caption>
+&#8203;<ProductName /> provides a set of Environment Variables that are optionally populated by the System, such as the URL of the Deployment or the name of the Git branch deployed.
 
-To **remove a Now Secret**, use the following command:
+To apply a System Environment Variable to your Deployment, enter its **Name**, leave the **Value** empty, and click **Add**.
 
-<Snippet dark text="now secrets rm <secret-name>"/>
-<Caption>Removing a <b>Now Secret</b> using <Link href="/now">Now CLI</Link>.</Caption>
+<Image
+  src={`${process.env.ASSETS}/docs/build-step/env-vars-system.png`}
+  width={1610 / 2}
+  height={740 / 2}
+  shadow
+/>
+<Caption>Adding a System Environment Variable in the Project Settings.</Caption>
 
-To **rename a Now Secret**, use the following command:
+The following System Environment Variables are available:
 
-<Snippet dark text="now secrets rename <secret-name> <new-name>"/>
-<Caption>Renaming a <b>Now Secret</b> using <Link href="/now">Now CLI</Link>.</Caption>
+<SystemEnvVariablesTable envs={SYSTEM_ENVS} />
 
-### Providing Environment Variables
+### Reserved Environment Variables
 
-To provide your project with environment variables during the Build Step, you should create a `now.json` file like the one below:
+The <ProductName /> platform reserves the usage of some Environment Variable names by default. You can find a list of these names in the [limits documentation](/docs/platform/limits/#reserved-variables).
 
-```json
-{
-  "build": {
-    "env": {
-      "VARIABLE_NAME": "@secret-name"
-    }
-  }
-}
-```
+### Using a `.env` File
 
-<Caption>
-  An example <InlineCode>now.json</InlineCode> file that provides an
-  application's build step with a defined environment variable.
-</Caption>
+We generally recommend only adding your Environment Variables in the [Project Settings](#environment-variables), as that's the only way to achieve different Environment Variables based on the Environment (Development, Preview or Production).
 
-When providing environment variables to your application, the value should always be prefixed with `@`, followed by the name of the [Now Secret](#adding-secrets) or environment variable name if using a `.env.build` file [during local development](#during-local-development).
-
-To use the environment variable from inside the application you would need to reference it using the correct syntax for the language being used. For example, using Node.js, the syntax would be:
-
-```
-process.env.VARIABLE_NAME
-```
-
-<Caption>
-  Accessing a defined environment variable from within a Node.js application.
-</Caption>
-
-Now, whenever the `process.env.VARIABLE_NAME` key is used, it will provide the application's build step with the value declared by the referenced **Now Secret**.
-
-## During Local Development
-
-When using `now dev` to develop your application locally if you require the use of [Serverless Functions](/docs/v2/serverless-functions/introduction), [Now Secrets](#adding-secrets) are not available. This is a security measure, to prevent accidental use of production secrets during development.
-
-To use environment variables during local development, create a `.env.build` file at the root of your project directory, for example:
-
-```
-VARIABLE_NAME=variable_value
-```
-
-<Caption>
-  An example <InlineCode>.env.build</InlineCode> file that provides the Build
-  Step with a defined environment variable.
-</Caption>
-
-<Note type="warning">
-  Usage of a <InlineCode>.env.build</InlineCode> file is only possible during
-  local development and will not be made available when deploying for security
-  reasons.
-</Note>
-
-### Updating Environment Variables
-
-Environment variables are made available to the build step, meaning that they do not update in the application unless it is redeployed.
-
-If you change the value of a [Now Secret](#adding-secrets) or environment variable and want your application to be aware of this, you should create a new deployment.
-
-### Reserved Variables
-
-The ZEIT Now platform reserves the usage of some environment variable names by default. You can find a list of these names in the [limits documentation](/docs/v2/platform/limits/#reserved-variables).
+Therefore, it's not necessary to use a `.env` file or configure Environment Variables within the `vercel.json` file.
 
 ## Ignored Files and Folders
 
-By default, ZEIT Now ignores certain files and folders for security and performance reasons, preventing them from being uploaded during the deployment process.
+By default, <ProductName /> ignores certain files and folders for security and performance reasons, preventing them from being uploaded during the deployment process.
 
 ```bash
-.hg
-.git
+.hg/
+.git/
 .gitmodules
-.svn
+.svn/
 .cache
-.next
-.now
+.next/
+.now/
+.vercel/
 .npmignore
 .dockerignore
 .gitignore
@@ -288,25 +314,25 @@ By default, ZEIT Now ignores certain files and folders for security and performa
 .DS_Store
 .wafpicke-*
 .lock-wscript
-.env
-.env.*
+.env.local
+.env.*.local
 .venv
 npm-debug.log
 config.gypi
-node_modules
+node_modules/
 __pycache__/
 venv/
 CVS
 ```
 
 <Caption>
-  A complete list of files and folders ignored by ZEIT Now during the deployment
-  process.
+  A complete list of files and folders ignored by <ProductName /> during the
+  deployment process.
 </Caption>
 
 <Note>
   You do not need to add any of the above files and folders to your{' '}
-  <InlineCode>.nowignore</InlineCode> file.
+  <InlineCode>.vercelignore</InlineCode> file.
 </Note>
 
 ## Technical Details
@@ -321,13 +347,13 @@ Each build step will cache files used to build the project, or files used in sub
 
 The caching mechanism for builds ensures that the next deployment will happen quicker by skipping downloading files that have already been used in a previous deployment.
 
-The maximum stored cache for builds is 3GB.
+The maximum stored cache for builds is 500MB.
 
 If a deployment fails, a cache may still be established for successfully built files, but failed builds will not be cached.
 
 ### Private npm Modules for Static Builds
 
-To install private npm modules, define `NPM_TOKEN` as a [build environment variable](/docs/configuration#project/build-env) in a `now.json` file.
+To install private npm modules, define `NPM_TOKEN` as a [build environment variable](/docs/configuration#project/build-env) in a `vercel.json` file.
 
 Alternatively, define `NPM_RC` as a [build environment variable](/docs/configuration#project/build-env) with the contents of `~/.npmrc`.
 
@@ -341,20 +367,20 @@ This is equivalent to `npm install --only=production` or `yarn install --product
 
 ### Prevent Cache Usage
 
-If you need to ignore the cache for a deployment, you can do so by using the [`-f` flag for Now CLI](/docs/now-cli/#commands/now/global-options). This prevents the cache from being used in the deployment and ensures a fresh install for all dependencies.
+If you need to ignore the cache for a deployment, you can do so by using the [`-f` flag for <ProductShortName /> CLI](/docs/cli/#commands/overview/global-options). This prevents the cache from being used in the deployment and ensures a fresh install for all dependencies.
 
 ### Framework Versioning
 
 Some frameworks do not use `package.json` to select a specific version to install during build time.
 
-By including [a `build.env` configuration property](/docs/configuration#project/build-env) in [a `now.json` file](/docs/configuration) at your project's root, you can define your framework's version with one of the following keys:
+By including [a `build.env` configuration property](/docs/configuration#project/build-env) in [a `vercel.json` file](/docs/configuration) at your project's root, you can define your framework's version with one of the following keys:
 
 | Framework | Build Env Key  |
 | --------- | -------------- |
 | Hugo      | `HUGO_VERSION` |
 | Zola      | `ZOLA_VERSION` |
 
-For example, defining the Hugo version in a `now.json` file would look like the following snippet:
+For example, defining the Hugo version in a `vercel.json` file would look like the following snippet:
 
 ```json
 {
@@ -368,7 +394,7 @@ For example, defining the Hugo version in a `now.json` file would look like the 
 
 <Caption>
   An example of defining a version for Hugo with a{' '}
-  <InlineCode>now.json</InlineCode> configuration.
+  <InlineCode>vercel.json</InlineCode> configuration.
 </Caption>
 
 <Note>
@@ -390,11 +416,12 @@ For example, defining the Hugo version in a `now.json` file would look like the 
 
 For more information on what to do next, we recommend the following articles:
 
-<Card title="Git Integration" href="/docs/v2/git-integrations">
-  Learn more about how ZEIT Now integrates with Git to make your workflow
+<Card title="Git Integration" href="/docs/git-integrations">
+  Learn more about how <ProductName /> integrates with Git to make your workflow
   easier.
 </Card>
 
-<Card title="Deploy Hooks" href="/docs/v2/advanced/deploy-hooks">
-  Use Deploy Hooks to trigger deployments to build content from outside ZEIT.
+<Card title="Deploy Hooks" href="/docs/advanced/deploy-hooks">
+  Use Deploy Hooks to trigger deployments to build content from outside{' '}
+  <OrgName />.
 </Card>

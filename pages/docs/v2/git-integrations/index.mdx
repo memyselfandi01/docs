@@ -17,7 +17,7 @@ export const meta = {
   description: `How to use the ${PRODUCT_NAME} Git Integrations for GitHub, GitLab, or Bitbucket to automatic deploy from your project's repository for each push and ship to production on merge to the main branch.`,
   image: `${process.env.ASSETS}/docs/git-integrations/git-push.png`,
   editUrl: 'pages/docs/v2/git-integrations/index.mdx',
-  lastEdited: '2020-08-04T17:41:11.000Z',
+  lastEdited: '2020-08-11T17:51:34.000Z',
 }
 
 ​​<ProductName /> provides integrations for your [GitHub](/docs/v2/git-integrations/vercel-for-github), [GitLab](/docs/v2/git-integrations/vercel-for-gitlab), and [Bitbucket](/docs/v2/git-integrations/vercel-for-bitbucket) projects, allowing for **automatic deployments on every branch push** and merge to the [Production Branch](#production-branch).
@@ -124,11 +124,11 @@ Whenever a new commit is then pushed to the branch you configured here, a [Produ
 
 ## Monorepos
 
-You can have multiple Projects that are connected to the same Git repository.
-Every branch push and merge will trigger deployments for all the connected projects.
+If you'd like to deploy multiple different directories within the same Git repository,
+you can do so by creating a separate Project for each directory and configuring the [Root Directory setting](/docs/build-step?query=root%20directory#root-directory) for it.
 
-To start, you can create all your Projects by [importing the Git repository](/docs/v2/git-integrations#quick-installation) multiple times.
-Each time you can select the Root Directory of one Project. It's also allowed to use the same Root Directory for multiple Projects.
+The easiest way to achieve this is by [importing your Git repository](/docs/v2/git-integrations#quick-installation) multiple times and selecting a different
+Root Directory every time – until one Project was created for each of the relevant directories.
 
 <Image
   src={`${process.env.ASSETS}/docs/common/monorepo-import.png`}
@@ -137,22 +137,19 @@ Each time you can select the Root Directory of one Project. It's also allowed to
   shadow
   borderRadius
 />
-<Caption>Selecting the Root Directory of your Project.</Caption>
+<Caption>Selecting a Root Directory for one of your new Projects.</Caption>
 
-Once all Projects are created, they'll all be connected to the same monorepo.
-
-Every push will now automatically create Deployments for all Projects, as well as comment on Pull Requests and commits with status updates.
+Once you've created a separate Project for each of the directories within your Git repository,
+every commit will issue a Deployment for all connected Projects and display the resulting URLs on your pull requests and commits:
 
 <Image
   src={`${process.env.ASSETS}/docs/common/monorepo-pr.png`}
   width={1832 / 2}
   height={702 / 2}
 />
-<Caption>
-  GitHub Integration's comment on a Pull Request of the monorepo.
-</Caption>
+<Caption>An example of Deployment URLs provided by a Git Integration.</Caption>
 
-Currently, only the **GitHub Integration** supports this feature and [up to 20 Projects](/docs/v2/platform/frequently-asked-questions#repository-connection-limitation) can be connected to the same repository. [Contact us](/support/request) if you have custom needs.
+Up to 20 Projects can be connected to the same Git repository. If you need to connect more, please [contact us](/support/request).
 
 export default ({ children }) => <Doc meta={meta}>{children}</Doc>
 

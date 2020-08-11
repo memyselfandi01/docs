@@ -5,14 +5,9 @@ const prettier = require('prettier')
 const productNames = require('../lib/name-constants.json')
 
 const DOMAIN = 'https://vercel.com'
-const SITE_PATHS = [
-  '/docs',
-  '/docs/api',
-  '/docs/integrations',
-  '/docs/cli',
-  '/docs/configuration',
-  '/docs/runtimes'
-]
+
+const EXCLUDE_SITE_PATHS = ['/docs/domains-and-aliases', '/docs/error']
+
 const META = /export\s+const\s+meta\s+=\s+({[\s\S]*?\n})/
 const SITEMAP_PATH = 'public/sitemap.xml'
 const GUIDES_PATH = 'lib/data/guides.json'
@@ -22,14 +17,14 @@ const xmlHeader = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">`
 
 // Wrap all pages in <urlset> tags
-const xmlUrlWrapper = nodes => `${xmlHeader}
+const xmlUrlWrapper = (nodes) => `${xmlHeader}
 ${nodes}
 </urlset>`
 
 function recursiveReadDirSync(dir, arr = [], rootDir = dir) {
   const result = fs.readdirSync(dir)
 
-  result.forEach(part => {
+  result.forEach((part) => {
     const absolutePath = path.join(dir, part)
     const pathStat = fs.statSync(absolutePath)
 
@@ -43,14 +38,11 @@ function recursiveReadDirSync(dir, arr = [], rootDir = dir) {
   return arr
 }
 
-function isV2Page(pagePath) {
+function isDocPage(pagePath) {
   return (
     !pagePath.includes('-mdx/') &&
     !pagePath.includes('.DS_Store') &&
-    SITE_PATHS.some(
-      dir =>
-        pagePath.startsWith(dir + '/index') || pagePath.startsWith(dir + '/v2')
-    )
+    !EXCLUDE_SITE_PATHS.some((e) => pagePath.startsWith(e))
   )
 }
 
@@ -77,13 +69,6 @@ function xmlUrlNode(pagePath) {
           .replace(/\${CDN_NAME}/g, productNames.cdnName)
           .replace(/\${CDN_SHORT_NAME}/g, productNames.cdnShortName)
           .replace(/\${PRODUCT_SHORT_NAME}/g, productNames.productShortName)
-          .replace(/\${PRODUCT_V1_NAME}/g, productNames.productV1Name)
-          .replace(/\${ORG_V1_NAME}/g, productNames.orgV1Name)
-          .replace(
-            /\${PRODUCT_SHORT_V1_NAME}/g,
-            productNames.productShortV1Name
-          )
-          .replace(/\${CLI_V1_NAME}/g, productNames.cliV1Name)
           .replace(/\${GITHUB_APP_NAME}/g, productNames.githubAppName)
           .replace(/\${GITLAB_APP_NAME}/g, productNames.gitlabAppName)
           .replace(/\${BITBUCKET_APP_NAME}/g, productNames.bitbucketAppName) +
@@ -109,7 +94,7 @@ function xmlUrlNode(pagePath) {
 }
 
 function generateSiteMap() {
-  // This will return pages in the format `/docs/v2/name.js`
+  // This will return pages in the format `/docs/name.js`
   const docs = recursiveReadDirSync('pages/docs', [], 'pages')
   const guides = recursiveReadDirSync('pages/guides', [], 'pages')
   const guidesMeta = []
@@ -118,15 +103,14 @@ function generateSiteMap() {
     .reduce((carry, filePath) => {
       const pagePath = filePath.replace(/\\/g, '/')
 
-      // Only v2 pages are included in sitemap.xml
-      if (isV2Page(pagePath) && !pagePath.startsWith('.')) {
+      if (isDocPage(pagePath) && !pagePath.startsWith('.')) {
         const { node } = xmlUrlNode(pagePath)
         carry.push(node)
       }
       return carry
     }, [])
     .concat(
-      guides.map(filePath => {
+      guides.map((filePath) => {
         const pagePath = filePath.replace(/\\/g, '/')
         const { node, meta } = xmlUrlNode(pagePath)
 
@@ -136,7 +120,7 @@ function generateSiteMap() {
             meta.image
               ? {
                   ...meta,
-                  image: meta.image.replace(' ', '%20')
+                  image: meta.image.replace(' ', '%20'),
                 }
               : meta
           )
@@ -150,6 +134,7 @@ function generateSiteMap() {
 
   fs.writeFileSync(SITEMAP_PATH, sitemap)
 
+  // eslint-disable-next-line
   console.log(
     `sitemap.xml with ${nodes.length} entries was written to ${SITEMAP_PATH}`
   )
@@ -169,10 +154,9 @@ function generateSiteMap() {
 
   fs.writeFileSync(GUIDES_PATH, prettier.format(guidesJson, { parser: 'json' }))
 
+  // eslint-disable-next-line
   console.log(
-    `guides.json with ${
-      guidesMeta.length
-    } entries was written to ${GUIDES_PATH}`
+    `guides.json with ${guidesMeta.length} entries was written to ${GUIDES_PATH}`
   )
 }
 

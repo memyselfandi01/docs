@@ -31,10 +31,7 @@ function validateURL(str) {
   return !!pattern.test(str)
 }
 
-const generateId = () =>
-  Math.random()
-    .toString(36)
-    .split('.')[1]
+const generateId = () => Math.random().toString(36).split('.')[1]
 
 export default function DeployButtonGenerator() {
   const defaultRepo =
@@ -61,7 +58,7 @@ export default function DeployButtonGenerator() {
   const isAmp = useAmp()
   const importUrl = 'https://vercel.com/import/git'
 
-  const onRepositoryChange = event => {
+  const onRepositoryChange = (event) => {
     const newRepo = event.target.value
 
     if (newRepo.length >= 1 && !validateURL(newRepo)) {
@@ -82,7 +79,7 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleAddEnv = event => {
+  const handleAddEnv = (event) => {
     event.preventDefault()
 
     if (env.length === 10) {
@@ -118,7 +115,7 @@ export default function DeployButtonGenerator() {
     setEnv(newEnvs)
   }
 
-  const handleEnvDescChange = event => {
+  const handleEnvDescChange = (event) => {
     if (hasEnv && event.target.value.length > 256) {
       setEnvDescriptionError(
         'The Environment Variables description must be 256 characters or less.'
@@ -129,7 +126,7 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleEnvLinkChange = event => {
+  const handleEnvLinkChange = (event) => {
     const newEnvLink = event.target.value
 
     if (
@@ -145,7 +142,7 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleProjectNameChange = event => {
+  const handleProjectNameChange = (event) => {
     const newProjectName = event.target.value
     if (newProjectName.length > 100) {
       setProjectNameError('A Project name cannot be longer than 100 characters')
@@ -162,7 +159,7 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleRepoNameChange = event => {
+  const handleRepoNameChange = (event) => {
     const newRepoName = event.target.value
     if (newRepoName.length > 100) {
       setRepoNameError(
@@ -181,7 +178,7 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleRedirectURLChange = event => {
+  const handleRedirectURLChange = (event) => {
     const newRedirectURL = event.target.value
     if (newRedirectURL.length >= 1 && !validateURL(newRedirectURL)) {
       setRedirectUrlError('Redirect URL must be a valid URL.')
@@ -191,17 +188,17 @@ export default function DeployButtonGenerator() {
     }
   }
 
-  const handleDeveloperIDChange = event => {
+  const handleDeveloperIDChange = (event) => {
     setDeveloperId(event.target.value)
   }
 
-  const handleDeployHookChange = event => {
+  const handleDeployHookChange = (event) => {
     setDeployHook(event.target.value)
   }
 
-  const filteredEnv = env.filter(envVar => envVar.value !== '')
+  const filteredEnv = env.filter((envVar) => envVar.value !== '')
   const hasEnv = filteredEnv.length !== 0
-  const envValues = filteredEnv.map(envVar => envVar.value).toString()
+  const envValues = filteredEnv.map((envVar) => envVar.value).toString()
 
   useEffect(() => {
     setEnvError('')
@@ -336,7 +333,7 @@ export default function DeployButtonGenerator() {
         tabs={[
           { title: 'Markdown', value: 'markdown' },
           { title: 'HTML', value: 'html' },
-          { title: 'URL', value: 'url' }
+          { title: 'URL', value: 'url' },
         ]}
         selected={selected}
         setSelected={setSelected}
@@ -451,7 +448,7 @@ export default function DeployButtonGenerator() {
                         width="100%"
                         value={envVar.value}
                         error={envVar.error}
-                        onChange={event =>
+                        onChange={(event) =>
                           handleChangeEnv(index, event.target.value)
                         }
                       />
@@ -463,7 +460,7 @@ export default function DeployButtonGenerator() {
                       width={40}
                       icon={<Cross />}
                       iconOffset={13}
-                      onClick={event => handleRemoveEnv(index, event)}
+                      onClick={(event) => handleRemoveEnv(index, event)}
                     />
                   </div>
                   <Spacer y={0.5} />
@@ -586,9 +583,9 @@ export default function DeployButtonGenerator() {
             <HR spacing={16} />
             <Text small>
               Set a name for a{' '}
-              <Link href="/docs/v2/more/deploy-hooks">Deploy Hook</Link> to
-              receive a Deploy Hook URL in return when redirecting the user from
-              the import flow.
+              <Link href="/docs/more/deploy-hooks">Deploy Hook</Link> to receive
+              a Deploy Hook URL in return when redirecting the user from the
+              import flow.
             </Text>
             <Spacer />
             <Clearable

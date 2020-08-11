@@ -16,9 +16,9 @@ export const meta = {
 
 <Note type="alert">
   The <InlineCode>name</InlineCode> property has been deprecated in favor of{' '}
-  <Link href="/docs/now-cli#commands/now/project-linking">Project Linking</Link>,
-  which allows you to link a ZEIT Now Project to your local codebase when you run{' '}
-  <InlineCode>now</InlineCode>.
+  <Link href="/docs/now-cli#commands/now/project-linking">Project Linking</Link>
+  , which allows you to link a ZEIT Now Project to your local codebase when you
+  run <InlineCode>now</InlineCode>.
 </Note>
 
 **Type**: `String`.
@@ -442,7 +442,7 @@ This is not recommended because it could lead to search engines indexing two dif
     { "source": "/about", "destination": "/about-our-company.html" },
     { "source": "/resize/:width/:height", "destination": "/api/sharp" },
     { "source": "/user/:id", "destination": "/api/user" },
-    { "source": "/proxy(.*)", "destination": "https://example.com$1" }
+    { "source": "/proxy/:match", "destination": "https://example.com/:match" }
   ]
 }`}</Code>
 
